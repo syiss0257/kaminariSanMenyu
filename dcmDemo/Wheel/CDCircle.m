@@ -39,6 +39,7 @@
         for (int i = 0; i < self.numberOfSegments; i++) {
             
             CDCircleThumb * thumb = [[CDCircleThumb alloc] initWithShortCircleRadius:rect1.size.height/2 longRadius:frame.size.height/2 numberOfSegments:self.numberOfSegments];
+            //thumb.tag = i;
             [self.thumbs addObject:thumb];
         }
           

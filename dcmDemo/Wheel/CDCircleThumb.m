@@ -57,7 +57,14 @@
         CGFloat yi = y/frame.size.height;
         self.layer.anchorPoint = CGPointMake(xi, yi);
         self.gradientFill = YES;
-        self.arcColor = [UIColor greenColor];
+        //ohtake_wrote
+//        if (self.tag%2 == 0) {
+//            self.arcColor = [UIColor whiteColor];
+//        } else {
+//            self.arcColor = [UIColor redColor];
+//        }
+        self.arcColor = [UIColor blackColor];
+        
         self.centerPoint = CGPointMake(CGRectGetMidX(self.bounds), y);
 //        self.iconView = [[CDIconView alloc] initWithFrame:CGRectMake(CGRectGetMidX(frame), y, kIconViewWidth, kIconViewHeight)];
 //        self.iconView.center = CGPointMake(CGRectGetMidX(frame), y);
@@ -98,46 +105,47 @@
     
     [arc closePath];
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    if (self.gradientFill == NO) {
-        [arc fill];
-    }
-    else {
-    
-        CGFloat la[[gradientColors count]];
-    CGPathRef path = arc.CGPath;
-        if ([gradientColors count] == 2) {
-            la[0] = 0.00f;
-            la[1] = 1.00f;
-        }
-        else 
-        {
-            
-            if (!colorsLocations) {
-                for (int i = [gradientColors count]-1; i >= 0; i--) {
-                    float fi = [gradientColors count]-1;
-                    float point = 1.00f/fi;
-                    la[i] = point * i;            }
-                
-
-            }
-            else {
-                for (int i = 0; i < [colorsLocations count]; i++) {
-                    
-                    la[i] = [[colorsLocations objectAtIndex:i] floatValue];
-                }
-            }
-        }
-   
-    
-    
-    
-    drawLinearGradient(context, path, (__bridge CFArrayRef) self.gradientColors, CGGradientPositionHorizontal, la, rect);
-    
-    
-    
-    }
+    //CGContextRef context = UIGraphicsGetCurrentContext();
+    //ohtake_wrote
+    [arc fill];
+//    if (self.gradientFill == NO) {
+//        [arc fill];
+//    }
+//    else {
+//    
+//        CGFloat la[[gradientColors count]];
+//    CGPathRef path = arc.CGPath;
+//        if ([gradientColors count] == 2) {
+//            la[0] = 0.00f;
+//            la[1] = 1.00f;
+//        }
+//        else 
+//        {
+//            
+//            if (!colorsLocations) {
+//                for (int i = [gradientColors count]-1; i >= 0; i--) {
+//                    float fi = [gradientColors count]-1;
+//                    float point = 1.00f/fi;
+//                    la[i] = point * i;            }
+//                
+//
+//            }
+//            else {
+//                for (int i = 0; i < [colorsLocations count]; i++) {
+//                    
+//                    la[i] = [[colorsLocations objectAtIndex:i] floatValue];
+//                }
+//            }
+//        }
+//   
+//    
+//    
+//    
+//    drawLinearGradient(context, path, (__bridge CFArrayRef) self.gradientColors, CGGradientPositionHorizontal, la, rect);
+//    
+//    
+//    
+//    }
     
     
     [[UIColor lightGrayColor] setStroke];
