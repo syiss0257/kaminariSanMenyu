@@ -44,8 +44,10 @@
         //otherThumb.backgroundColor = [UIColor clearColor];
         //thumb.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
         //thumb.transform = CGAffineTransformIdentity;
-        otherThumb.scale = 0.25f;
-        [otherThumb setNeedsDisplay];
+        for (int i = 1; i<=5; i++) {
+            otherThumb.scale = 0.1f + 0.03f*i;
+            [otherThumb setNeedsDisplay];
+        }
     }
     
     //thumb.backgroundColor = [UIColor yellowColor];
