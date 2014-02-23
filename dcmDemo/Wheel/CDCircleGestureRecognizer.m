@@ -63,8 +63,27 @@
     
 //    float degree = currentTransformAngle *360 /(2*M_PI);
 //    NSLog(@"ラジアン：%f　度：%f", currentTransformAngle, degree);
-    NSLog(@"%f",radiansToDegrees(currentTransformAngle));
+    //NSLog(@"%f",radiansToDegrees(currentTransformAngle));
     //NSLog(@"%f",radiansToDegrees(atan2f(currentTouchPoint.y - center.y, currentTouchPoint.x - center.x) - atan2f(previousTouchPoint.y - center.y, previousTouchPoint.x - center.x)));
+    
+    
+    
+    
+    for (CDCircleThumb *thumb in view.thumbs) {
+        CGPoint point = [thumb convertPoint:thumb.centerPoint toView:nil];
+        CDCircleThumb *shadow = view.overlayView.overlayThumb;
+        CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
+        
+        if (CGRectContainsPoint(shadowRect, point) == YES) {
+            NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+      
+        }
+    }
+    ;
+    
+    
+    
+    
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -113,6 +132,8 @@
                CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
                
                if (CGRectContainsPoint(shadowRect, point) == YES) {
+                  // NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+                   
                    CGPoint pointInShadowRect = [thumb convertPoint:thumb.centerPoint toView:shadow];
                    if (CGPathContainsPoint(shadow.arc.CGPath, NULL, pointInShadowRect, NULL)) {
                        CGAffineTransform current = view.transform;
@@ -124,12 +145,7 @@
                         [UIView animateWithDuration:0.2f animations:^{
                        [view setTransform:CGAffineTransformRotate(current, deltaAngle)];
                         }];
-                       
-                       
-                       
-                       
-                       
-
+ 
                        SystemSoundID soundID;
                        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"iPod Click" ofType:@"aiff"];
                        
@@ -159,6 +175,9 @@
      [self setState:UIGestureRecognizerStateEnded];  
        
    } else {
+       
+       NSLog(@"vvvvvvvvvvvvvvvvvvvvvv");
+       
        
        CDCircle *view = (CDCircle *)[self view];
        UITouch *touch = [touches anyObject];
