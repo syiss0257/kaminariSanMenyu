@@ -25,6 +25,8 @@
     CDCircleOverlayView *overlay = [[CDCircleOverlayView alloc] initWithCircle:circle];
     [self.view addSubview:circle];
     //Overlay cannot be subview of a circle because then it would turn around with the circle
+    
+    //ohtake_wrote
     overlay.alpha = 0.0f;
     [self.view addSubview:overlay];
 
@@ -38,6 +40,19 @@
 
 -(void) circle:(CDCircle *)circle didMoveToSegment:(NSInteger)segment thumb:(CDCircleThumb *)thumb{
     NSLog(@"%d",segment);
+    for (CDCircleThumb* otherThumb in circle.thumbs){
+        otherThumb.backgroundColor = [UIColor clearColor];
+        //thumb.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
+        //thumb.transform = CGAffineTransformIdentity;
+        otherThumb.scale = 0.25f;
+        [otherThumb setNeedsDisplay];
+    }
+    
+    thumb.backgroundColor = [UIColor yellowColor];
+    thumb.scale = 0.1f;
+    [thumb setNeedsDisplay];
+    //thumb.transform = CGAffineTransformMakeScale(2.0, 2.0);
+    //thumb.layer.transform = CATransform3DMakeScale(2.0, 2.0, 1);
 }
 
 -(UIImage *) circle:(CDCircle *)circle iconForThumbAtRow:(NSInteger)row{

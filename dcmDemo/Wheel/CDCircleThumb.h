@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIColor *arcColor;
 
 @property (nonatomic, strong) UILabel *lb;
+@property  (nonatomic, assign) float scale;
 
 -(id) initWithShortCircleRadius: (CGFloat) shortRadius longRadius: (CGFloat) longRadius numberOfSegments: (CGFloat) sNumber;
 

@@ -75,8 +75,17 @@
         CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
         
         if (CGRectContainsPoint(shadowRect, point) == YES) {
-            NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
-      
+            //NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+//            NSLog(@"TTTTT%@",NSStringFromCGPoint(point));
+//      
+//            NSLog(@"BBBBB%@",NSStringFromCGRect(shadowRect));
+            thumb.backgroundColor = [UIColor yellowColor];
+            //thumb.backgroundColor = [UIColor colorWithRed:0.1 green:<#(CGFloat)#> blue:<#(CGFloat)#> alpha:<#(CGFloat)#>];
+            //NSLog(@"SSSSS%f",CGRectGetMidX(shadowRect)-point.x);
+            
+            
+        } else {
+            thumb.backgroundColor = [UIColor clearColor];
         }
     }
     ;
@@ -132,7 +141,7 @@
                CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
                
                if (CGRectContainsPoint(shadowRect, point) == YES) {
-                  // NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+                   //NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
                    
                    CGPoint pointInShadowRect = [thumb convertPoint:thumb.centerPoint toView:shadow];
                    if (CGPathContainsPoint(shadow.arc.CGPath, NULL, pointInShadowRect, NULL)) {
@@ -161,8 +170,11 @@
                        self.ended = YES;
                        break;
                    }
-                   
-               }            
+                   //thumb.backgroundColor = [UIColor blueColor];
+               }
+//               else {
+//                   thumb.backgroundColor = [UIColor redColor];
+//               }
            }
 ;
        }];

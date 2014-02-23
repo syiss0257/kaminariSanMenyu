@@ -76,7 +76,7 @@
     _lb.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     [self addSubview:_lb];
     
-    
+    _scale = 0.25f;
     
     return self;
 }
@@ -86,14 +86,15 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    
+    NSLog(@"UUUUUUUUU");
     
     // Drawing code
     [super drawRect:rect];
 //    [self.arcColor setStroke];
 //    [self.arcColor setFill];
     //ohtake_wrote
-    CGRect box = CGRectInset(self.bounds, self.bounds.size.width * 0.25f, self.bounds.size.height * 0.25f);
+    //CGRect box = CGRectInset(self.bounds, self.bounds.size.width * 0.25f, self.bounds.size.height * 0.25f);
+    CGRect box = CGRectInset(self.bounds, self.bounds.size.width * _scale, self.bounds.size.height * _scale);
     UIBezierPath *ballBezierPath = [UIBezierPath bezierPathWithOvalInRect:box];
     [[UIColor blackColor] setStroke];
     [[UIColor whiteColor] setFill]; // Green here to show the black area
@@ -125,6 +126,9 @@
 }
 
 -(BOOL) pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    
+    
+    NSLog(@"%@",_lb.text);
     return NO;
 }
 
