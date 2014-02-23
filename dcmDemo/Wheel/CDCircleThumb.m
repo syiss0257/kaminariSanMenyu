@@ -86,8 +86,6 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    NSLog(@"UUUUUUUUU");
-    
     // Drawing code
     [super drawRect:rect];
 //    [self.arcColor setStroke];
@@ -128,7 +126,7 @@
 -(BOOL) pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     
     
-    NSLog(@"%@",_lb.text);
+    //NSLog(@"%@",_lb.text);
     return NO;
 }
 

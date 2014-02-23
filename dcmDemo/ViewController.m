@@ -39,16 +39,16 @@
 }
 
 -(void) circle:(CDCircle *)circle didMoveToSegment:(NSInteger)segment thumb:(CDCircleThumb *)thumb{
-    NSLog(@"%d",segment);
+    //NSLog(@"%d",segment);
     for (CDCircleThumb* otherThumb in circle.thumbs){
-        otherThumb.backgroundColor = [UIColor clearColor];
+        //otherThumb.backgroundColor = [UIColor clearColor];
         //thumb.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
         //thumb.transform = CGAffineTransformIdentity;
         otherThumb.scale = 0.25f;
         [otherThumb setNeedsDisplay];
     }
     
-    thumb.backgroundColor = [UIColor yellowColor];
+    //thumb.backgroundColor = [UIColor yellowColor];
     thumb.scale = 0.1f;
     [thumb setNeedsDisplay];
     //thumb.transform = CGAffineTransformMakeScale(2.0, 2.0);

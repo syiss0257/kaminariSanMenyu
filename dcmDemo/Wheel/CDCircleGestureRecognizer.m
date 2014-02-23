@@ -78,14 +78,25 @@
             //NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
 //            NSLog(@"TTTTT%@",NSStringFromCGPoint(point));
 //      
-//            NSLog(@"BBBBB%@",NSStringFromCGRect(shadowRect));
-            thumb.backgroundColor = [UIColor yellowColor];
+            //NSLog(@"BBBBB%@",NSStringFromCGRect(shadowRect));
+            //thumb.backgroundColor = [UIColor yellowColor];
             //thumb.backgroundColor = [UIColor colorWithRed:0.1 green:<#(CGFloat)#> blue:<#(CGFloat)#> alpha:<#(CGFloat)#>];
-            //NSLog(@"SSSSS%f",CGRectGetMidX(shadowRect)-point.x);
+            //NSLog(@"SSSSS%dUUU%f",thumb.tag,CGRectGetMidX(shadowRect)-point.x);
+            //NSLog(@"SSSSS%dUUU%f",thumb.tag,CGRectGetMidX(shadowRect));
+            //thumb.scale = 1.25 - 0.25*fabs(CGRectGetMidX(shadowRect)-point.x)/CGRectGetMidX(shadowRect);
+            float kyori = CGRectGetMidX(shadowRect)-shadowRect.origin.x;
+            
+            thumb.scale = 0.15/kyori*fabs(CGRectGetMidX(shadowRect)-point.x)+0.1;
+            
+//            
+//            thumb.scale = 0.4;
+//            thumb.scale = 0.25 - 0.15;
+            NSLog(@"%f",thumb.scale);
+            [thumb setNeedsDisplay];
             
             
         } else {
-            thumb.backgroundColor = [UIColor clearColor];
+            //thumb.backgroundColor = [UIColor clearColor];
         }
     }
     ;
