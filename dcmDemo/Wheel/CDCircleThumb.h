@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSArray *gradientColors;
 @property (nonatomic, strong) UIColor *arcColor;
 
+@property (nonatomic, strong) UILabel *lb;
+
 -(id) initWithShortCircleRadius: (CGFloat) shortRadius longRadius: (CGFloat) longRadius numberOfSegments: (CGFloat) sNumber;
 
 @end

@@ -38,12 +38,16 @@
     if ((fendAngle - fstartAngle) <= 180) {
             width = bigArc.bounds.size.width;
         height = smallArc.currentPoint.y ;
-        frame = CGRectMake(0, 0, width, height);
+        //frame = CGRectMake(0, 0, width, height);
+        frame = CGRectMake(0, 0, width, width);
     }
     if ((fendAngle - fstartAngle) > 269) {
-        frame = CGRectMake(0, 0, bigArc.bounds.size.width, bigArc.bounds.size.height);
+        //frame = CGRectMake(0, 0, bigArc.bounds.size.width, bigArc.bounds.size.height);
+        frame = CGRectMake(0, 0, bigArc.bounds.size.width, bigArc.bounds.size.width);
     }
             //End of calculations
+    
+    //frame = CGRectMake(0, 0, 80, 80);
     
     self = [super initWithFrame:frame];
     if (self) {
@@ -64,6 +68,16 @@
 
         self.gradientColors =  [NSArray arrayWithObjects:(id)[UIColor blackColor].CGColor,(id)[UIColor grayColor].CGColor,  nil];
     }
+    
+    
+    //ohtake_wrote
+    _lb = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 10, 20)];
+    _lb.text = @"1";
+    _lb.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    [self addSubview:_lb];
+    
+    
+    
     return self;
 }
 
@@ -72,10 +86,20 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    
+    
     // Drawing code
     [super drawRect:rect];
-    [self.arcColor setStroke];
-    [self.arcColor setFill];
+//    [self.arcColor setStroke];
+//    [self.arcColor setFill];
+    //ohtake_wrote
+    CGRect box = CGRectInset(self.bounds, self.bounds.size.width * 0.25f, self.bounds.size.height * 0.25f);
+    UIBezierPath *ballBezierPath = [UIBezierPath bezierPathWithOvalInRect:box];
+    [[UIColor blackColor] setStroke];
+    [[UIColor whiteColor] setFill]; // Green here to show the black area
+    [ballBezierPath stroke];
+    [ballBezierPath fill];
+
     //Angles
     
     CGFloat clockwiseStartAngle = degreesToRadians((270 - ((360/numberOfSegments)/2)));
@@ -89,11 +113,14 @@
     self.arc = [UIBezierPath bezierPathWithArcCenter: center radius:lRadius startAngle:clockwiseStartAngle endAngle:clockwiseEndAngle clockwise:YES];
 
     [arc addArcWithCenter:center radius:sRadius startAngle:nonClockwiseStartAngle endAngle:nonClockwiseEndAngle clockwise:NO];
-    [arc closePath];
-    [arc fill];
+//    [arc closePath];
+//    [arc fill];
 
-    [[UIColor lightGrayColor] setStroke];
-    [[UIColor redColor] setFill];
+//    [[UIColor lightGrayColor] setStroke];
+//    [[UIColor redColor] setFill];
+    
+    
+    
 
 }
 

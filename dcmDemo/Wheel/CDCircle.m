@@ -86,6 +86,7 @@
 
         CDCircleThumb * thumb = [self.thumbs objectAtIndex:i];
         thumb.tag = i;
+        thumb.lb.text = [NSString stringWithFormat:@"%d",thumb.tag];
         //thumb.iconView.image = [self.dataSource circle:self iconForThumbAtRow:thumb.tag];
 
         CGFloat radius = rect1.size.height/2 + ((rect.size.height/2 - rect1.size.height/2)/2) - thumb.yydifference;

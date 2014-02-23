@@ -25,6 +25,7 @@
     CDCircleOverlayView *overlay = [[CDCircleOverlayView alloc] initWithCircle:circle];
     [self.view addSubview:circle];
     //Overlay cannot be subview of a circle because then it would turn around with the circle
+    overlay.alpha = 0.0f;
     [self.view addSubview:overlay];
 
 }
