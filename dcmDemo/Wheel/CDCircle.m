@@ -77,7 +77,7 @@
     CGFloat totalRotation = 360.f / fNumberOfSegments;//36
     CGPoint centerPoint = CGPointMake(rect.size.width/2, rect.size.height/2);//150
     
-    //NSLog(@"%f,%f,%@",perSectionDegrees,totalRotation,NSStringFromCGPoint(centerPoint));
+
     
     CGFloat deltaAngle;
     
@@ -87,7 +87,6 @@
         CDCircleThumb * thumb = [self.thumbs objectAtIndex:i];
         thumb.tag = i;
         thumb.lb.text = [NSString stringWithFormat:@"%d",thumb.tag];
-        //thumb.iconView.image = [self.dataSource circle:self iconForThumbAtRow:thumb.tag];
 
         CGFloat radius = rect1.size.height/2 + ((rect.size.height/2 - rect1.size.height/2)/2) - thumb.yydifference;
         CGFloat x = centerPoint.x + (radius * cos(degreesToRadians(perSectionDegrees)));

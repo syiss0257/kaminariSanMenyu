@@ -88,10 +88,7 @@
 {
     // Drawing code
     [super drawRect:rect];
-//    [self.arcColor setStroke];
-//    [self.arcColor setFill];
-    //ohtake_wrote
-    //CGRect box = CGRectInset(self.bounds, self.bounds.size.width * 0.25f, self.bounds.size.height * 0.25f);
+
     CGRect box = CGRectInset(self.bounds, self.bounds.size.width * _scale, self.bounds.size.height * _scale);
     UIBezierPath *ballBezierPath = [UIBezierPath bezierPathWithOvalInRect:box];
     [[UIColor blackColor] setStroke];
@@ -112,14 +109,7 @@
     self.arc = [UIBezierPath bezierPathWithArcCenter: center radius:lRadius startAngle:clockwiseStartAngle endAngle:clockwiseEndAngle clockwise:YES];
 
     [arc addArcWithCenter:center radius:sRadius startAngle:nonClockwiseStartAngle endAngle:nonClockwiseEndAngle clockwise:NO];
-//    [arc closePath];
-//    [arc fill];
 
-//    [[UIColor lightGrayColor] setStroke];
-//    [[UIColor redColor] setFill];
-    
-    
-    
 
 }
 

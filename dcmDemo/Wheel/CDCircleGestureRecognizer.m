@@ -59,13 +59,7 @@
     CGFloat angleInRadians = atan2f(currentTouchPoint.y - center.y, currentTouchPoint.x - center.x) - atan2f(previousTouchPoint.y - center.y, previousTouchPoint.x - center.x);
    [self setRotation:angleInRadians];
     currentTransformAngle = atan2f(view.transform.b, view.transform.a);
-    
-    
-//    float degree = currentTransformAngle *360 /(2*M_PI);
-//    NSLog(@"ラジアン：%f　度：%f", currentTransformAngle, degree);
-    //NSLog(@"%f",radiansToDegrees(currentTransformAngle));
-    //NSLog(@"%f",radiansToDegrees(atan2f(currentTouchPoint.y - center.y, currentTouchPoint.x - center.x) - atan2f(previousTouchPoint.y - center.y, previousTouchPoint.x - center.x)));
-    
+
     
     
     
@@ -75,15 +69,7 @@
         CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
         
         if (CGRectContainsPoint(shadowRect, point) == YES) {
-            //NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
-//            NSLog(@"TTTTT%@",NSStringFromCGPoint(point));
-//      
-            //NSLog(@"BBBBB%@",NSStringFromCGRect(shadowRect));
-            //thumb.backgroundColor = [UIColor yellowColor];
-            //thumb.backgroundColor = [UIColor colorWithRed:0.1 green:<#(CGFloat)#> blue:<#(CGFloat)#> alpha:<#(CGFloat)#>];
-            //NSLog(@"SSSSS%dUUU%f",thumb.tag,CGRectGetMidX(shadowRect)-point.x);
-            //NSLog(@"SSSSS%dUUU%f",thumb.tag,CGRectGetMidX(shadowRect));
-            //thumb.scale = 1.25 - 0.25*fabs(CGRectGetMidX(shadowRect)-point.x)/CGRectGetMidX(shadowRect);
+ 
             float kyori = CGRectGetMidX(shadowRect)-shadowRect.origin.x;
             
             thumb.scale = 0.15/kyori*fabs(CGRectGetMidX(shadowRect)-point.x)+0.1;
@@ -172,9 +158,7 @@
                        NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
                        AudioServicesCreateSystemSoundID((__bridge CFURLRef)fileUrl, &soundID);
                        AudioServicesPlaySystemSound(soundID);
-                       
-//                       [currentThumb.iconView setIsSelected:NO];
-//                       [thumb.iconView setIsSelected:YES];
+
                        self.currentThumb = thumb;
                        //Delegate method
                        [view.delegate circle:view didMoveToSegment:thumb.tag thumb:thumb];
@@ -199,7 +183,6 @@
        
    } else {
        
-       NSLog(@"vvvvvvvvvvvvvvvvvvvvvv");
        
        
        CDCircle *view = (CDCircle *)[self view];
@@ -222,9 +205,7 @@
                    NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
                    AudioServicesCreateSystemSoundID((__bridge CFURLRef)fileUrl, &soundID);
                    AudioServicesPlaySystemSound(soundID);
-                   
-//                   [currentThumb.iconView setIsSelected:NO];
-//                   [thumb.iconView setIsSelected:YES];
+
                    self.currentThumb = thumb;
                    //Delegate method
                    [view.delegate circle:view didMoveToSegment:thumb.tag thumb:thumb];
