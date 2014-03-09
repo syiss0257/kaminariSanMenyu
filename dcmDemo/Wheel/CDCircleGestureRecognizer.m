@@ -12,19 +12,20 @@
 //#import "CDCircleThumb.h"
 
 
+
 @implementation CDCircleGestureRecognizer
 
 @synthesize rotation = rotation_, controlPoint;
 @synthesize ended;
 @synthesize currentThumb;
+int circleDirection = 0;//0:方向なし　1:右回り　2:左回り
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CDCircle *view = (CDCircle *) [self view];
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:view];
-    
-    //NSLog(@"%@",NSStringFromCGPoint(point));
+
     
    // Fail when more than 1 finger detected.
    if ([[event touchesForGestureRecognizer:self] count] > 1 || ([view.path containsPoint:point] == YES )) {
@@ -36,6 +37,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+
    if ([self state] == UIGestureRecognizerStatePossible) {
       [self setState:UIGestureRecognizerStateBegan];
    } else {
@@ -69,31 +71,64 @@
         CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
         
         if (CGRectContainsPoint(shadowRect, point) == YES) {
- 
-            float kyori = CGRectGetMidX(shadowRect)-shadowRect.origin.x;
             
+            float kyori = CGRectGetMidX(shadowRect)-shadowRect.origin.x;//定数
             thumb.scale = 0.15/kyori*fabs(CGRectGetMidX(shadowRect)-point.x)+0.1;
             
 //            
 //            thumb.scale = 0.4;
 //            thumb.scale = 0.25 - 0.15;
-            NSLog(@"%f",thumb.scale);
+            //NSLog(@"%f",thumb.scale);
             [thumb setNeedsDisplay];
+//            if (thumb.tag==5) {
+//                NSLog(@"%f",(CGRectGetMidX(shadowRect)-point.x));
+//                //thumb.backgroundColor = [UIColor redColor];
+//                //self.state = UIGestureRecognizerStateEnded;
+//                //self.state = UIGestureRecognizerStateCancelled;
+//                if (fabs((CGRectGetMidX(shadowRect)-point.x))<15) {
+//                    [self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//                }
+//                //[self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//                //self.state =  UIGestureRecognizerStateBegan;
+//                //                self.enabled = NO;
+//                //                self.enabled =YES;
+//            }
+            NSLog(@"VVVVVVVVVV%f",(CGRectGetMidX(shadowRect)-point.x));
+            if (thumb.tag==0) {
+                //NSLog(@"VVVVVVVVVV%f",(CGRectGetMidX(shadowRect)-point.x));
+                if (fabs((CGRectGetMidX(shadowRect)-point.x))<15) {
+                                           if ((CGRectGetMidX(shadowRect)-point.x)>-5) {
+                                               //circleDirection = 0;
+                                            } else {
+                                               //circleDirection = 0;
+                                             [self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+                                            }
+
+                }
+                
+             }
             
+        }else if(thumb.tag==9){
             
-        } else {
+            if (fabs((CGRectGetMidX(shadowRect)-point.x))<15 && point.y<100) {
+                NSLog(@"PPPPPPPPPPPPPPPPPP");
+                if ((CGRectGetMidX(shadowRect)-point.x)<-5) {
+                    //circleDirection = 0;
+                } else {
+                    //circleDirection = 0;
+                    [self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+                }
+            }} else {
             //thumb.backgroundColor = [UIColor clearColor];
         }
     }
     ;
     
-    
-    
-    
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+
    // Perform final check to make sure a tap was not misinterpreted.
    if ([self state] == UIGestureRecognizerStateChanged) {
     
@@ -124,32 +159,40 @@
 
        }
        
-       
-              
+
        [UIView animateWithDuration:flipintime delay:0.f options:UIViewAnimationOptionCurveEaseOut animations:^{
+           
            [view setTransform:CGAffineTransformRotate(view.transform,angle)];
+
 
        } completion:^(BOOL finished) {
            for (CDCircleThumb *thumb in view.thumbs) {
                
-               
+               NSLog(@"RRRRRRRRR%f",radiansToDegrees(atan2(view.transform.a, view.transform.b)));
                CGPoint point = [thumb convertPoint:thumb.centerPoint toView:nil];
                CDCircleThumb *shadow = view.overlayView.overlayThumb;
                CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
                
                if (CGRectContainsPoint(shadowRect, point) == YES) {
-                   //NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+//                   NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+//                   if (thumb.tag==5) {
+//                       thumb.backgroundColor = [UIColor yellowColor];
+//                   }
                    
                    CGPoint pointInShadowRect = [thumb convertPoint:thumb.centerPoint toView:shadow];
                    if (CGPathContainsPoint(shadow.arc.CGPath, NULL, pointInShadowRect, NULL)) {
                        CGAffineTransform current = view.transform;
-                   
-                       
-                    CGFloat deltaAngle= - degreesToRadians(180) + atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b);
 
+                    CGFloat deltaAngle= - degreesToRadians(180) + atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b);
+                       //CGFloat deltaAngle= degreesToRadians(180) + atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b);
+
+                       //NSLog(@"EEEEEEEEES%f",radiansToDegrees(deltaAngle));
+                       //deltaAngle = degreesToRadians(180);
+                       //deltaAngle =0;
                        
                         [UIView animateWithDuration:0.2f animations:^{
-                       [view setTransform:CGAffineTransformRotate(current, deltaAngle)];
+                       
+                            [view setTransform:CGAffineTransformRotate(current, deltaAngle)];
                         }];
  
                        SystemSoundID soundID;
@@ -183,7 +226,7 @@
        
    } else {
        
-       
+       //button押した時の処理
        
        CDCircle *view = (CDCircle *)[self view];
        UITouch *touch = [touches anyObject];
@@ -229,3 +272,117 @@
    [self setState:UIGestureRecognizerStateFailed];
 }
 @end
+
+
+//NSLog(@"SSSSSSSSSS%f",(CGRectGetMidX(shadowRect)-point.x));
+//                    CGPoint v = [self velocityInView:thumb];
+//                    NSLog(@"PPPPPPPPP%f",v.x);
+//                    CGPoint p = [self translationInView:view];
+//                    NSLog(@"KKKKKKKKKKK%f",p.x);
+//                    double delayInSeconds = 0.03;
+//                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//
+//
+//                        NSLog(@"SSSSSSSSSS%f",(CGRectGetMidX(shadowRect)-point.x));
+//
+//                    });
+
+//                    if (circleDirection == 0) {
+//                        NSLog(@"0000000000");
+//                        if ((CGRectGetMidX(shadowRect)-point.x)>=0) {
+//                            circleDirection = 1;
+//                        } else if((CGRectGetMidX(shadowRect)-point.x)<0){
+//                            circleDirection = 2;
+//                        }
+//
+//                        //[self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//
+//                    } else if(circleDirection == 1){
+//                        NSLog(@"1111111111");
+//                        if ((CGRectGetMidX(shadowRect)-point.x)<0) {
+//                            //circleDirection = 0;
+//                        } else {
+//                            //circleDirection = 0;
+//                          [self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//                        }
+//
+//                    } else if(circleDirection == 2){
+//                        NSLog(@"22222222222");
+//                        if ((CGRectGetMidX(shadowRect)-point.x)<0) {
+//                            //circleDirection = 0;
+//                        } else {
+//                            //circleDirection = 0;
+//                            [self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//                        }
+//                    }
+//                    //[self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//                    //[self setState:UIGestureRecognizerStateFailed];
+//                    if ((CGRectGetMidX(shadowRect)-point.x)<0) {
+//
+//                    } else {
+//                        [self touchesEnded:[NSSet set] withEvent:[UIEvent alloc]];
+//                    }
+
+
+
+//
+//           CDCircleThumb *thumb = [view.thumbs objectAtIndex:5];
+//           CGPoint point2 = [thumb convertPoint:thumb.centerPoint toView:nil];
+//           CDCircleThumb *shadow = view.overlayView.overlayThumb;
+//           CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
+//
+
+//       for (CDCircleThumb *thumb in view.thumbs) {
+//           CGPoint point = [thumb convertPoint:thumb.centerPoint toView:nil];
+//           CDCircleThumb *shadow = view.overlayView.overlayThumb;
+//           CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
+//
+//           if (CGRectContainsPoint(shadowRect, point) == YES) {
+//               if (thumb.tag == 5) {
+//                   angle =0;
+//                   NSLog(@"jjjjjjjjjjj");
+//                   [self setState:UIGestureRecognizerStateEnded];
+//                   return;
+//
+//               }
+//
+//           }
+//       }
+
+
+
+
+//NSLog(@"SSSSSSSSS%f",radiansToDegrees(angle));
+//angle =0;
+//return;
+//NSLog(@"EEEEEEEEES%f",radiansToDegrees(angle));
+
+
+//NSLog(@"RRRRRRRRR%f",radiansToDegrees(atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b)));
+//                       CGFloat deltaAngle;
+//                       if (radiansToDegrees(atan2(view.transform.a, view.transform.b))<90 && 0<radiansToDegrees(atan2(view.transform.a, view.transform.b))) {
+//                          //deltaAngle= - degreesToRadians(0) + atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b);
+//                           deltaAngle =- degreesToRadians(180) + atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b)-angle;
+//                       } else{
+//                           deltaAngle= - degreesToRadians(180) + atan2(view.transform.a, view.transform.b) + atan2(thumb.transform.a, thumb.transform.b);
+// }
+
+
+//           if (CGRectContainsPoint(shadowRect, point2) == YES) {
+//               //NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+//                   thumb.backgroundColor = [UIColor yellowColor];
+//               }
+//           for (CDCircleThumb *thumb in view.thumbs) {
+//
+//
+//               CGPoint point2 = [thumb convertPoint:thumb.centerPoint toView:nil];
+//               CDCircleThumb *shadow = view.overlayView.overlayThumb;
+//               CGRect shadowRect = [shadow.superview convertRect:shadow.frame toView:nil];
+//
+//               if (CGRectContainsPoint(shadowRect, point2) == YES) {
+//                   NSLog(@"ZZZZZZZZZZZZZZZ%d",thumb.tag);
+//                   if (thumb.tag==5) {
+//                       thumb.backgroundColor = [UIColor yellowColor];
+//                   }}}
+
